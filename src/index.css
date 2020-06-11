@@ -4,3 +4,7 @@
  body #fonts {
 font-family: 'Montserrat', sans-serif;
 }
+.footer {
+    bottom:0;
+    width:100%;
+ }

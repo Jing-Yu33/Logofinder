@@ -7,9 +7,9 @@ const Title = () =>{
          <h2 className= "ui center aligned icon header">
             <i className="fas fa-robot green"></i>
          </h2>
-         <h2 className="ui center aligned icon grey header">  
+         <h1 className="ui center aligned icon header">  
             Logo Images Classifier
-         </h2>
+         </h1>
      </div>
    )
 };

@@ -20,6 +20,12 @@ class Predition extends React.Component{
     //         url: url
     //     })
     // }
+    changeColor(e) {
+        e.target.style.color = 'Blue';
+      }
+    changeColorBack(e) {
+        e.target.style.color = 'Black';
+      }
      onFileUpload = (pictures)  => {
         this.setState({
             files: pictures,
@@ -27,7 +33,10 @@ class Predition extends React.Component{
         })
     }
     _predict =  (e) => {
-        this.setState({isLoading: true});
+        this.setState({
+            isLoading: true,
+            results: []
+        });
         if (this.state.files) {
             this.state.files.map(async (file) =>{
                 let response = null;
@@ -61,12 +70,21 @@ class Predition extends React.Component{
     placeHolder = () => {
         return (
             <div className="ui center aligned container">
-                <div className="ui container" disabled>
-                    Result
-                    <i class=" hand point down outline icon"></i>
+                <div className="ui items" >
+                    <div className="item">
+                        <div className="ui center content">
+                            <a className="ui grey header"
+                                // onMouseOver={this.changeColor} 
+                                // onMouseLeave={this.changeColorBack}
+                            >
+                        <i className=" tag icon"></i>
+                        Result
+                    </a>
+                    </div>
+                </div>
                 </div>
                 {( this.state.isLoading  || (!this.state.imageSelected) || this.state.results.length === 0) && (
-                 <div>
+                 <div className="ui center aligned container">
                     <Spinner
                     as="span"
                     animation="grow"
@@ -100,7 +118,7 @@ class Predition extends React.Component{
             <div className="ui container">
                 {this.placeHolder()}
                 {this.renderResult()}
-                <h2 className="ui purple center grey aligned header" >Upload an image</h2>
+                <h2 className="ui  center grey aligned header" >Upload an image</h2>
                 <ImageUploader withIcon={true}
                     id='image'
                     onChange={this.onFileUpload}
