@@ -9,19 +9,20 @@ class Predition extends React.Component{
     state = {
         files: null,
         url: null,
-        isLoading: false,
+        isLoading: true,
         imageSelected: true,
         results : []
     };
-    onUrlSubmit = (url) => {
-        this.setState({
-            url: url
-        })
-    }
+    // onUrlSubmit = (url) => {
+    //     this.setState({
+    //         url: url
+    //     })
+    // }
      onFileUpload = (pictures)  => {
         this.setState({
             files: pictures,
-            imageSelected: true
+            imageSelected: true,
+            isLoading: false
         })
     }
     _predict =  (e) => {
@@ -38,20 +39,21 @@ class Predition extends React.Component{
                         'content-type': 'multipart/form-data'
                     } 
                 });
-                console.log(response.data);
+                // console.log(response.data);
                 this.setState( state=>{
                     const results = [...state.results,response.data.prediction];
                     return {results};
                  });
             })
-            
+            // this.setState({isLoading: false});
         }       
     }
     _clear = async (e) => {
         this.setState({
             files: null,
             imageSelected: false,
-            predictions: [],
+            isLoading: true,
+            results: [],
             url: ""
         })
     };
@@ -72,7 +74,7 @@ class Predition extends React.Component{
                 {/* <UrlForm onSubmit={this.onUrlSubmit}/>
                 <h2 className="ui purple center aligned header" id="fonts">OR</h2> */}
                 {this.renderResult()}
-                <h2 className="ui purple center aligned header" >Upload an image</h2>
+                <h2 className="ui purple center grey aligned header" >Upload an image</h2>
                 <ImageUploader withIcon={true}
                     id='image'
                     onChange={this.onFileUpload}
@@ -80,10 +82,10 @@ class Predition extends React.Component{
                 />
                 <div class="ui container center aligned">
                     <div className="ui centered form">
-                            <button className="ui primary basic button " onClick={this._predict}
+                            <button className="ui primary fluid basic button " onClick={this._predict}
                                     disabled={this.state.isLoading}> Predict</button>
                             <span className="p-1 "/>
-                            <button className="ui negative basic button " onClick={this._clear}> Clear</button>
+                            <button className="ui negative fluid basic button " onClick={this._clear}> Clear</button>
                     </div>
                 </div>
             </div>
