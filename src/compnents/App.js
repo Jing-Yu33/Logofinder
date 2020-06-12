@@ -11,7 +11,7 @@ class App extends React.Component{
     
     render(){
         return (
-            <div className="ui container">
+            <div className="ui container" style={{minHeight:'100%', display:'flex',flexDirection: 'column'}}>
                  <Router history={history}> 
                     <Header/>
                     <Switch>
