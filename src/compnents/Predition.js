@@ -3,9 +3,7 @@ import ImageUploader from 'react-images-upload';
 import classify from '../apis/classify';
 import ShowResult from './ShowResult';
 import Spinner from 'react-bootstrap/Spinner';
-
-import Title from './Title'
-import UrlForm from './UrlForm';
+import { Message } from 'semantic-ui-react'
 import '../index.css'
 class Predition extends React.Component{
     state = {
@@ -15,11 +13,6 @@ class Predition extends React.Component{
         imageSelected: false,
         results : []
     };
-    // onUrlSubmit = (url) => {
-    //     this.setState({
-    //         url: url
-    //     })
-    // }
     changeColor(e) {
         e.target.style.color = 'Blue';
       }
@@ -32,7 +25,7 @@ class Predition extends React.Component{
             imageSelected: true,
         })
     }
-    _predict =  (e) => {
+    _predict =  () => {
         this.setState({
             isLoading: true,
             results: []
@@ -58,7 +51,7 @@ class Predition extends React.Component{
             this.setState({isLoading: false});
         }       
     }
-    _clear = async (e) => {
+    _clear = async () => {
         this.setState({
             files: null,
             imageSelected: false,
@@ -70,7 +63,7 @@ class Predition extends React.Component{
     placeHolder = () => {
         return (
             <div className="ui center aligned container">
-                <div className="ui items" >
+                {/* /* /* <div className="ui items" >
                     <div className="item">
                         <div className="ui center content">
                             <a className="ui grey header"
@@ -81,8 +74,8 @@ class Predition extends React.Component{
                         Result
                     </a>
                     </div>
-                </div>
-                </div>
+        </div>*/}
+            {/* </div>  */}
                 {( this.state.isLoading  || (!this.state.imageSelected) || this.state.results.length === 0) && (
                  <div className="ui center aligned container">
                     <Spinner
@@ -97,12 +90,6 @@ class Predition extends React.Component{
         )
     }
     renderResult = () => {
-        // if (this.state.isLoading && this.state.imageSelected) { 
-        //     return (
-        //         <div className="ui container">
-        //             <Spinner color="primary" type="grow" />
-        //         </div>
-        // )}
         if (this.state.results.length !== 0) {
             console.log(this.state.results);
             return (
@@ -115,25 +102,30 @@ class Predition extends React.Component{
     }
     render() {
         return (
-            <div className="ui container">
-                {this.placeHolder()}
-                {this.renderResult()}
-                <h2 className="ui  center grey aligned header" >Upload an image</h2>
-                <ImageUploader withIcon={true}
-                    id='image'
-                    onChange={this.onFileUpload}
-                    withPreview={true}
-                />
-                <div class="ui container center aligned">
-                    <div className="ui centered form">
-                            <button className="ui primary fluid basic button " onClick={this._predict}
-                                    disabled={this.state.isLoading || !this.state.imageSelected}> Predict</button>
-                            {/* <span className="p-1 "/> */}
-                            {/* <br></br>
-                            <button className="ui negative fluid basic button " onClick={this._clear}> Clear</button> */}
-                    </div>
-                </div>
-            </div>
+          <div className="ui container">
+              <Message style={{width:'50%', backgroundColor:'clear', textAlign:'center', margin:'auto',backgroundColor: 'rgba(255,255,255,0)'}}>
+                <Message.Header>
+                  <a className="ui grey header">
+                    <i className=" tag icon"></i>
+                    Result
+                  </a>
+                </Message.Header>
+                  {this.placeHolder()}
+                 {this.renderResult()}
+              </Message>
+              <h2 className="ui  center grey aligned header" >Upload an image</h2>
+              <ImageUploader withIcon={true}
+                  id='image'
+                  onChange={this.onFileUpload}
+                  withPreview={true}
+              />
+              <div class="ui container center aligned">
+                  <div className="ui centered form">
+                          <button className="ui primary fluid basic button " onClick={this._predict}
+                                  disabled={this.state.isLoading || !this.state.imageSelected}> Predict</button>
+                  </div>
+              </div>
+          </div>
         )
     }
 }
